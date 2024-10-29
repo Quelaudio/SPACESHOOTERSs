@@ -14,6 +14,7 @@ public abstract class Ship {
 
 
 
+
     //Constutor geral
     public Ship(int posX, int posY, SpriteBatch batch, String pathString, String bulletString, int colum, int rows, int width, int height) {
         this.posY = posY;
@@ -34,18 +35,11 @@ public abstract class Ship {
     }
 
     public void render() {
+        animator.render(posX, posY);
+        boundingBox.setPosition(posX, posY);
 
-    // o if serve para ver se ta destruido se nao tiver da render normal se nao passa po else
-        if (!isDestroyed) {
-            animator.render(posX, posY);
-            boundingBox.setPosition(posX, posY);
-        }
-        else {
-            // algo vai vir para aqui agora o que nao sei so sei que deus vai ajudar
         }
 
-
-    }
 
 
     //apenas poem valor true na variavel isDestroyed

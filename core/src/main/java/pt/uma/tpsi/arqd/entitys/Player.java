@@ -15,14 +15,11 @@ public class Player extends Ship {
     private SpriteBatch batch;
 
 
-
-
     public Player(int posX, int posY, SpriteBatch batch, String pathString, String bulletString, int colum, int rows,int width,int height) {
         super(posX, posY, batch, pathString, bulletString, colum, rows,height,width);
         this.animator = new Animator(batch, pathString, colum, rows);
         this.laser= new ArrayList<Laser>();
         this.batch = batch;
-
 
     }
 
@@ -58,25 +55,22 @@ public class Player extends Ship {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             shoot();  // para disparar spacebar
         }
-
-
     }
 
     private void keepWithinBounds() {
         int screenWidth = Gdx.graphics.getWidth();
-        int screenHeight = Gdx.graphics.getHeight();
+//        int screenHeight = Gdx.graphics.getHeight();
         int playerWidth = animator.getWidth();
         int playerHeight = animator.getHeight();
 
 
         posX = Math.max(0, Math.min(posX, screenWidth - playerWidth));
-        posY = Math.max(0, Math.min(posY, screenHeight - playerHeight));
+        posY = Math.max(0, Math.min(posY, 300 - playerHeight));
     }
 
     public ArrayList<Laser> getLaser(){
         return this.laser;
     }
-
 
     //  shooting logic
     @Override
@@ -84,6 +78,5 @@ public class Player extends Ship {
         Laser l = new Laser(this.posX,this.posY, batch,false);
         l.create();
         laser.add(l);
-
     }
 }

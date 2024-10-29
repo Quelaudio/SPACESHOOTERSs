@@ -7,6 +7,7 @@ import pt.uma.tpsi.arqd.game.Animator;
 public class MediumShip extends Ship{
 
     Rectangle boundingBox;
+    private SpriteBatch batch;
 
     public MediumShip(int posX, int posY, SpriteBatch batch, String pathString,String bulletString ,int colum, int rows,int width, int height) {
         super(posX,posY,batch,pathString,bulletString, colum, rows, width,  height);
@@ -15,12 +16,12 @@ public class MediumShip extends Ship{
 
     }
 
-
-
     @Override
     public void shoot() {
-
+        Laser laser = new Laser(this.posX,this.posY,batch,true);
+        laser.create();
     }
+
 
 }
 

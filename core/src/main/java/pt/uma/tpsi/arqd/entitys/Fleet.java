@@ -34,31 +34,29 @@ public class Fleet  {
 
     //Handle collision vai verificar se existe contato entre a entidade lase
     // e a entidade Ship  caso haja "OverLap" a nave "explode" e é removida da ArrayList<Ship> fleet
-        public void HandleCollision(Player player){
-            ArrayList<Laser> lasers = player.getLaser();
-            lasers.removeIf(laser -> {
-                for(Ship ship : fleet) {
-                    if(ship.boundingBox.overlaps(laser.boundingBox)) {
-                        ship.explode();
-                        return true;
-                    }
+    public void handleCollision(Player player){
+        ArrayList<Laser> lasers = player.getLaser();
+        lasers.removeIf(laser -> {
+            for(Ship ship : fleet) {
+                if(ship.boundingBox.overlaps(laser.boundingBox)) {
+                    ship.explode();
+                    return true;
                 }
-                return false;
-            });
-            fleet.removeIf(Ship::isDestroyed);
-}
+            }
+            return false;
+        });
+        fleet.removeIf(Ship::isDestroyed);
+    }
 
 
     public void randomShoot() {
         if (!fleet.isEmpty()) {
             Random r = new Random();
             int randomIndex = r.nextInt(fleet.size());
+            System.out.println("cageuyi");
             fleet.get(randomIndex).shoot();
         }
     }
-
-
-
 
     public void create() {
         for(Ship s : fleet){

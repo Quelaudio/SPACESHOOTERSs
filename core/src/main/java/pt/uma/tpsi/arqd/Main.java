@@ -29,7 +29,7 @@ public class Main extends ApplicationAdapter {
         font = new com.badlogic.gdx.graphics.g2d.BitmapFont(Gdx.files.internal("gamefont.fnt"), Gdx.files.internal("gamefont.png"), false);
         backgroundManagement = new BackgroundManagement(batch);
         player=new Player(100, 100, batch,"ship.png","laser-bolts",5,2,64,64);
-        fleet = new Fleet(100 , 500, batch, "laser-bolts", 2, 1,30, 30);
+        fleet = new Fleet(100 , 500, batch, "laser-bolts",2, 1,30, 30);
 
 
 
@@ -52,7 +52,7 @@ public class Main extends ApplicationAdapter {
         fleet.render();
 
         batch.end();
-        fleet.HandleCollision(player);
+        fleet.handleCollision(player);
 
 
     }
