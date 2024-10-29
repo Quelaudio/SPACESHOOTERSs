@@ -1,24 +1,14 @@
 package pt.uma.tpsi.arqd.entitys;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Fleet {
+public class Fleet  {
 
     private ArrayList<Ship> fleet;
-    Timer timer= new Timer();
-    
-    timer.scheduleTask(new Timer.Task(){
-        @Override
-            public void run(){
-            randomShoot();
-        }
-    },3,2);
-
+    private ArrayList<Laser> laserFleet;
     public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows,int width, int height){
         this.fleet = new ArrayList<Ship>();
         for( int i=0; i<10; i++){
@@ -32,9 +22,18 @@ public class Fleet {
             fleet.add(s);
             fleet.add(m);
         }
+
+        Timer timer= new Timer();
+        timer.scheduleTask(new Timer.Task(){
+            @Override
+            public void run(){
+                randomShoot();
+            }
+        }, 3, 2);
     }
 
-    //Handle collision vai verificar se existe contato entre a entidade lase e a entidade Ship  caso haja "OverLap" a nave "explode" e é removida da ArrayList<Ship> fleet
+    //Handle collision vai verificar se existe contato entre a entidade lase
+    // e a entidade Ship  caso haja "OverLap" a nave "explode" e é removida da ArrayList<Ship> fleet
         public void HandleCollision(Player player){
             ArrayList<Laser> lasers = player.getLaser();
             lasers.removeIf(laser -> {
@@ -50,27 +49,28 @@ public class Fleet {
 }
 
 
-public void randomShoot(){
-
-        if(!fleet.isEmpty()){
+    public void randomShoot() {
+        if (!fleet.isEmpty()) {
             Random r = new Random();
-            int randomIndex = r.nexInt(fleet.size());
+            int randomIndex = r.nextInt(fleet.size());
             fleet.get(randomIndex).shoot();
         }
-}
+    }
+
 
 
 
     public void create() {
-        for(Ship l : fleet){
-            l.create();
+        for(Ship s : fleet){
+            s.create();
         }
     }
 
     public void render() {
-        for(Ship l : fleet){
-            l.render();
+        for(Ship s : fleet){
+            s.render();
         }
+
 
     }
 }

@@ -58,6 +58,8 @@ public class Animator {
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
                 walkFrames[index++] = tmp[i][j];
+                //walkFrames[index].flip(false,flip);
+                //index++;
             }
         }
 

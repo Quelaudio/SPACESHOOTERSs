@@ -1,6 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Lwjgl3Launcher" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="pt.uma.tpsi.arqd.lwjgl3.Lwjgl3Launcher" />
+    <module name="SPACESHOOTERS.lwjgl3.main" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="pt.uma.tpsi.arqd.lwjgl3.*" />

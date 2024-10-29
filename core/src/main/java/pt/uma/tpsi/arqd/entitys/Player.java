@@ -11,9 +11,9 @@ public class Player extends Ship {
     private int posX, posY;
     private final Animator animator;
     private final int speed = 10;
-    private int bulletPos;
     private ArrayList<Laser> laser;
     private SpriteBatch batch;
+
 
 
 
@@ -81,7 +81,7 @@ public class Player extends Ship {
     //  shooting logic
     @Override
     public void shoot() {
-        Laser l = new Laser(this.posX,this.posY, batch);
+        Laser l = new Laser(this.posX,this.posY, batch,false);
         l.create();
         laser.add(l);
 

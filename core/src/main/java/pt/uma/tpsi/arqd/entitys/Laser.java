@@ -9,13 +9,15 @@ public class Laser {
     protected int posX,posY;
     protected Animator animator;
     protected Rectangle boundingBox;
+    private boolean flip;
 
     //contrutor basico
-    public Laser(int posX,int posY, SpriteBatch batch){
+    public Laser(int posX,int posY, SpriteBatch batch,boolean flip){
         this.posX = posX;
         this.posY = posY;
+        this.flip= flip;
         this.animator= new Animator(batch,"laser-bolts.png",2,1);
-
+        this.animator.setFlip(this.flip);
 
     }
 
@@ -26,7 +28,12 @@ public class Laser {
     }
 
     public void render() {
-        this.posY +=7;
+
+        if(!flip) {
+            this.posY += 7;
+        }else {
+            this.posY-=7;
+        }
         animator.render(posX, posY);
         boundingBox.setPosition(posX,posY);
 
