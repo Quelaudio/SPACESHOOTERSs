@@ -10,9 +10,10 @@ public class Laser {
     protected Animator animator;
     protected Rectangle boundingBox;
     private boolean flip;
+    private int bulletSpeed;
 
     //contrutor basico
-    public Laser(int posX,int posY, SpriteBatch batch,boolean flip){
+    public Laser(int posX,int posY, SpriteBatch batch,boolean flip,int bulletSpeed){
         this.posX = posX;
         this.posY = posY;
         this.flip= flip;
@@ -34,6 +35,8 @@ public class Laser {
         }else {
             this.posY-=7;
         }
+
+
         animator.render(posX, posY);
         boundingBox.setPosition(posX,posY);
 

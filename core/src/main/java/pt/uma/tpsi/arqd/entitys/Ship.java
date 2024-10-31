@@ -11,6 +11,7 @@ public abstract class Ship {
     protected String pathString;
     protected Rectangle boundingBox;
     protected boolean isDestroyed = false;
+    protected Laser laser;
 
 
 
@@ -37,10 +38,11 @@ public abstract class Ship {
     public void render() {
         animator.render(posX, posY);
         boundingBox.setPosition(posX, posY);
-
+        if(laser != null){
+            laser.render();
         }
 
-
+        }
 
     //apenas poem valor true na variavel isDestroyed
     public void explode() {
@@ -54,4 +56,6 @@ public abstract class Ship {
     }
 
     public abstract void shoot();
+    public abstract int getDamage();
+
 }

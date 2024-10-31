@@ -3,7 +3,6 @@ package pt.uma.tpsi.arqd.entitys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import pt.uma.tpsi.arqd.game.Animator;
 import java.util.ArrayList;
 
@@ -11,14 +10,17 @@ public class Player extends Ship {
     private int posX, posY;
     private final Animator animator;
     private final int speed = 10;
-    private ArrayList<Laser> laser;
+    private ArrayList<Laser> laserArrayList;
     private SpriteBatch batch;
+    int bulletSpeed = 5;
+    int HP = 100;
+    private int bulletDamage = 0;
 
 
     public Player(int posX, int posY, SpriteBatch batch, String pathString, String bulletString, int colum, int rows,int width,int height) {
         super(posX, posY, batch, pathString, bulletString, colum, rows,height,width);
         this.animator = new Animator(batch, pathString, colum, rows);
-        this.laser= new ArrayList<Laser>();
+        this.laserArrayList = new ArrayList<Laser>();
         this.batch = batch;
 
     }
@@ -33,7 +35,7 @@ public class Player extends Ship {
         boundingBox.setPosition(posX,posY);
         animator.render(posX, posY);
 
-        for(Laser l : laser){
+        for(Laser l : laserArrayList){
             l.render();
         }
     }
@@ -57,6 +59,14 @@ public class Player extends Ship {
         }
     }
 
+
+    public String StringHealth(){
+
+        return "Player Health:" + HP;
+    }
+
+
+
     private void keepWithinBounds() {
         int screenWidth = Gdx.graphics.getWidth();
 //        int screenHeight = Gdx.graphics.getHeight();
@@ -68,15 +78,20 @@ public class Player extends Ship {
         posY = Math.max(0, Math.min(posY, 300 - playerHeight));
     }
 
-    public ArrayList<Laser> getLaser(){
-        return this.laser;
+    public ArrayList<Laser> getLaserArrayList(){
+        return this.laserArrayList;
     }
 
     //  shooting logic
     @Override
     public void shoot() {
-        Laser l = new Laser(this.posX,this.posY, batch,false);
+        Laser l = new Laser(this.posX,this.posY, batch,false,this.bulletSpeed);
         l.create();
-        laser.add(l);
+        laserArrayList.add(l);
+    }
+
+    @Override
+    public int getDamage() {
+        return 0;
     }
 }

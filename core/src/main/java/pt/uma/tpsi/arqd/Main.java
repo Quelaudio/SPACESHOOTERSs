@@ -9,6 +9,7 @@ import pt.uma.tpsi.arqd.entitys.Fleet;
 import pt.uma.tpsi.arqd.entitys.Player;
 import pt.uma.tpsi.arqd.entitys.SmallShip;
 import pt.uma.tpsi.arqd.game.BackgroundManagement;
+import pt.uma.tpsi.arqd.game.BitmapFont;
 
 
 public class Main extends ApplicationAdapter {
@@ -29,7 +30,7 @@ public class Main extends ApplicationAdapter {
         font = new com.badlogic.gdx.graphics.g2d.BitmapFont(Gdx.files.internal("gamefont.fnt"), Gdx.files.internal("gamefont.png"), false);
         backgroundManagement = new BackgroundManagement(batch);
         player=new Player(100, 100, batch,"ship.png","laser-bolts",5,2,64,64);
-        fleet = new Fleet(100 , 500, batch, "laser-bolts",2, 1,30, 30);
+        fleet = new Fleet(100 , 450, batch, "laser-bolts",2, 1,30, 30);
 
 
 
@@ -47,12 +48,14 @@ public class Main extends ApplicationAdapter {
 
         batch.begin();
         backgroundManagement.render();
-//        BitmapFont.drawText(10,750,"HELLO WORLD!",batch);
+        BitmapFont.drawText(10,680,player.StringHealth(),batch);
         player.render();
         fleet.render();
 
+
         batch.end();
         fleet.handleCollision(player);
+        fleet.handlePlayerLaser(player);
 
 
     }

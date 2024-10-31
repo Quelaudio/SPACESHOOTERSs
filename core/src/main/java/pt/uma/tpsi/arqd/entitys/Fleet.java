@@ -9,12 +9,14 @@ public class Fleet  {
 
     private ArrayList<Ship> fleet;
     private ArrayList<Laser> laserFleet;
+    private Laser laser;
+
     public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows,int width, int height){
         this.fleet = new ArrayList<Ship>();
         for( int i=0; i<10; i++){
-            Ship l = new SmallShip( posX + i * 158, posY+ 50,  batch,  "enemy-small.png", bulletString,  colum,  rows, width, height);
-            Ship s = new MediumShip( posX + i * 150, posY + 100,  batch,  "enemy-medium.png", bulletString,  colum,  rows, width, height);
-            Ship m = new LargeShip( posX + i * 150, posY +150,  batch,  "enemy-big.png", bulletString,  colum,  rows, width, height);
+            Ship s = new SmallShip( posX + i * 158, posY+ 50,  batch,  "enemy-small.png", bulletString,  colum,  rows, width, height);
+            Ship m = new MediumShip( posX + i * 150, posY + 100,  batch,  "enemy-medium.png", bulletString,  colum,  rows, width, height);
+            Ship l = new LargeShip( posX + i * 150, posY +150,  batch,  "enemy-big.png", bulletString,  colum,  rows, width, height);
             l.create();
             s.create();
             m.create();
@@ -29,13 +31,13 @@ public class Fleet  {
             public void run(){
                 randomShoot();
             }
-        }, 3, 2);
+        }, 3,2);
     }
 
     //Handle collision vai verificar se existe contato entre a entidade lase
     // e a entidade Ship  caso haja "OverLap" a nave "explode" e é removida da ArrayList<Ship> fleet
     public void handleCollision(Player player){
-        ArrayList<Laser> lasers = player.getLaser();
+        ArrayList<Laser> lasers = player.getLaserArrayList();
         lasers.removeIf(laser -> {
             for(Ship ship : fleet) {
                 if(ship.boundingBox.overlaps(laser.boundingBox)) {
@@ -49,11 +51,23 @@ public class Fleet  {
     }
 
 
+    public void handlePlayerLaser(Player player) {
+        for (Ship ship : fleet) {
+            if (ship.laser != null && player.boundingBox.overlaps(ship.laser.boundingBox)) {
+                player.HP -= ship.getDamage();
+                System.out.println(player.StringHealth());
+                ship.laser = null;
+            }
+        }
+    }
+
+
+
     public void randomShoot() {
         if (!fleet.isEmpty()) {
             Random r = new Random();
             int randomIndex = r.nextInt(fleet.size());
-            System.out.println("cageuyi");
+            System.out.println("Shoot");
             fleet.get(randomIndex).shoot();
         }
     }
