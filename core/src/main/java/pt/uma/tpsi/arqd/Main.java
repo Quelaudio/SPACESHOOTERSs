@@ -49,6 +49,7 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         backgroundManagement.render();
         BitmapFont.drawText(10,680,player.StringHealth(),batch);
+        BitmapFont.drawText(1000,680,player.scoreString(),batch);
         player.render();
         fleet.render();
 
@@ -56,6 +57,7 @@ public class Main extends ApplicationAdapter {
         batch.end();
         fleet.handleCollision(player);
         fleet.handlePlayerLaser(player);
+        fleet.isOutOfBounds();
 
 
     }

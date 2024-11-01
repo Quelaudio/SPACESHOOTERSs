@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import pt.uma.tpsi.arqd.game.Animator;
 
 public class SmallShip extends Ship{
-    int bulletSpeed = 5;
+    int bulletSpeed = 7;
     Rectangle boundingBox;
     private SpriteBatch batch;
 

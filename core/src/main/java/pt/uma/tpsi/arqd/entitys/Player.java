@@ -12,9 +12,11 @@ public class Player extends Ship {
     private final int speed = 10;
     private ArrayList<Laser> laserArrayList;
     private SpriteBatch batch;
-    int bulletSpeed = 5;
-    int HP = 100;
-    private int bulletDamage = 0;
+    public int bulletSpeed = 5;
+    public int HP = 100;
+    public int Score;
+
+
 
 
     public Player(int posX, int posY, SpriteBatch batch, String pathString, String bulletString, int colum, int rows,int width,int height) {
@@ -29,12 +31,14 @@ public class Player extends Ship {
         animator.create();
     }
 
+
     public void render() {
         handleInput();
         keepWithinBounds();
         boundingBox.setPosition(posX,posY);
         animator.render(posX, posY);
 
+        laserArrayList.removeIf(Laser::isOutOfBounds);
         for(Laser l : laserArrayList){
             l.render();
         }
@@ -65,11 +69,14 @@ public class Player extends Ship {
         return "Player Health:" + HP;
     }
 
+    public String scoreString(){
+        return "Score:" + Score;
+    }
 
 
     private void keepWithinBounds() {
-        int screenWidth = Gdx.graphics.getWidth();
-//        int screenHeight = Gdx.graphics.getHeight();
+
+       int screenWidth = Gdx.graphics.getWidth();
         int playerWidth = animator.getWidth();
         int playerHeight = animator.getHeight();
 
@@ -89,6 +96,7 @@ public class Player extends Ship {
         l.create();
         laserArrayList.add(l);
     }
+
 
     @Override
     public int getDamage() {

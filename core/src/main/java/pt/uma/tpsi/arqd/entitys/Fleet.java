@@ -1,22 +1,28 @@
 package pt.uma.tpsi.arqd.entitys;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
-public class Fleet  {
+public class Fleet {
 
     private ArrayList<Ship> fleet;
-    private ArrayList<Laser> laserFleet;
-    private Laser laser;
+    private ArrayList<Explosion> explosions; // List to hold active explosions
+    private SpriteBatch batch;
+    int screenHeight = Gdx.graphics.getHeight();
 
-    public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows,int width, int height){
+    public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows, int width, int height) {
         this.fleet = new ArrayList<Ship>();
-        for( int i=0; i<10; i++){
-            Ship s = new SmallShip( posX + i * 158, posY+ 50,  batch,  "enemy-small.png", bulletString,  colum,  rows, width, height);
-            Ship m = new MediumShip( posX + i * 150, posY + 100,  batch,  "enemy-medium.png", bulletString,  colum,  rows, width, height);
-            Ship l = new LargeShip( posX + i * 150, posY +150,  batch,  "enemy-big.png", bulletString,  colum,  rows, width, height);
+        this.explosions = new ArrayList<>(); // Initialize explosion list
+        this.batch = batch;
+
+        for (int i = 0; i < 10; i++) {
+            Ship s = new SmallShip(posX + i * 158, posY + 50, batch, "enemy-small.png", bulletString, colum, rows, width, height);
+            Ship m = new MediumShip(posX + i * 150, posY + 100, batch, "enemy-medium.png", bulletString, colum, rows, width, height);
+            Ship l = new LargeShip(posX + i * 150, posY + 150, batch, "enemy-big.png", bulletString, colum, rows, width, height);
             l.create();
             s.create();
             m.create();
@@ -25,23 +31,29 @@ public class Fleet  {
             fleet.add(m);
         }
 
-        Timer timer= new Timer();
-        timer.scheduleTask(new Timer.Task(){
+        Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
             @Override
-            public void run(){
+            public void run() {
                 randomShoot();
             }
-        }, 3,2);
+        }, 3, 2);
     }
 
-    //Handle collision vai verificar se existe contato entre a entidade lase
-    // e a entidade Ship  caso haja "OverLap" a nave "explode" e é removida da ArrayList<Ship> fleet
-    public void handleCollision(Player player){
+    public void handleCollision(Player player) {
         ArrayList<Laser> lasers = player.getLaserArrayList();
         lasers.removeIf(laser -> {
-            for(Ship ship : fleet) {
-                if(ship.boundingBox.overlaps(laser.boundingBox)) {
+            for (Ship ship : fleet) {
+                if (ship.boundingBox.overlaps(laser.boundingBox)) {
                     ship.explode();
+                    player.Score += 5;
+
+                    Explosion explosion = new Explosion(ship.posX, ship.posY, batch, "explosion.png", 5, 1);
+                    explosions.add(explosion);
+
+
+
+
                     return true;
                 }
             }
@@ -49,7 +61,6 @@ public class Fleet  {
         });
         fleet.removeIf(Ship::isDestroyed);
     }
-
 
     public void handlePlayerLaser(Player player) {
         for (Ship ship : fleet) {
@@ -61,7 +72,21 @@ public class Fleet  {
         }
     }
 
+    public boolean isOutOfBounds() {
+        boolean outOfBounds = false;
 
+        for (Ship ship : fleet) {
+            if (ship.laser != null) {
+                if (ship.laser.posY > screenHeight || ship.laser.posY < 0) {
+                    System.out.println("The laser is out of bounds.");
+                    ship.laser = null;
+                    outOfBounds = true;
+                }
+            }
+        }
+
+        return outOfBounds;
+    }
 
     public void randomShoot() {
         if (!fleet.isEmpty()) {
@@ -73,16 +98,19 @@ public class Fleet  {
     }
 
     public void create() {
-        for(Ship s : fleet){
+        for (Ship s : fleet) {
             s.create();
         }
     }
 
     public void render() {
-        for(Ship s : fleet){
+        for (Ship s : fleet) {
             s.render();
         }
 
-
+        // Render active explosions
+        for (Explosion explosion : explosions) {
+            explosion.animator.render(explosion.posX, explosion.posY);
+        }
     }
 }

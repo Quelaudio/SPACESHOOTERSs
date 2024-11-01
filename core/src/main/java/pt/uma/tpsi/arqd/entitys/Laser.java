@@ -1,4 +1,5 @@
 package pt.uma.tpsi.arqd.entitys;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import pt.uma.tpsi.arqd.game.Animator;
@@ -11,6 +12,9 @@ public class Laser {
     protected Rectangle boundingBox;
     private boolean flip;
     private int bulletSpeed;
+    int screenHeight = Gdx.graphics.getHeight();
+
+
 
     //contrutor basico
     public Laser(int posX,int posY, SpriteBatch batch,boolean flip,int bulletSpeed){
@@ -18,10 +22,18 @@ public class Laser {
         this.posY = posY;
         this.flip= flip;
         this.animator= new Animator(batch,"laser-bolts.png",2,1);
+        this.bulletSpeed = bulletSpeed;
         this.animator.setFlip(this.flip);
 
     }
 
+    public boolean isOutOfBounds() {
+        if (this.posY > screenHeight || this.posY < 0) {
+            System.out.println("The laser is out of bounds.");
+            return true;
+        }
+        return false;
+    }
 
     public void create() {
         animator.create();
@@ -41,4 +53,6 @@ public class Laser {
         boundingBox.setPosition(posX,posY);
 
     }
+
+
 }
