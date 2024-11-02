@@ -1,14 +1,14 @@
 package pt.uma.tpsi.arqd.entitys;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import pt.uma.tpsi.arqd.game.Animator;
 
 public class LargeShip extends Ship{
-    int bulletSpeed = 5;
+    int bulletSpeed = 10;
     Rectangle boundingBox;
     private SpriteBatch batch;
-    private int bulletDamage = 100;
 
 
     public LargeShip(int posX, int posY, SpriteBatch batch, String pathString, String bulletString,int colum, int rows,int width, int height) {
@@ -20,15 +20,23 @@ public class LargeShip extends Ship{
 
 
 
+
     @Override
     public void shoot() {
-        laser = new Laser(this.posX,this.posY,batch,true,this.bulletSpeed);
+        // isto Sir Hugo ira calcular o centro basicamente pegas na altura e with e divides por 2
+        float centerX = Gdx.graphics.getWidth() / 2f;
+        float centerY = Gdx.graphics.getHeight() / 2f;
+
+        //calcular o angulo da nave para o centro
+        float angleToCenter = (float) Math.toDegrees(Math.atan2(centerY - this.posY, centerX - this.posX));
+
+        laser = new Laser(this.posX, this.posY, batch, true, this.bulletSpeed, angleToCenter);
         laser.create();
     }
 
     @Override
     public int getDamage() {
-        return bulletDamage;
+        return 15;
     }
 
 }

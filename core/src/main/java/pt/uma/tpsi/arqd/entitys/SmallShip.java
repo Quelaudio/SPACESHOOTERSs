@@ -18,7 +18,7 @@ public class SmallShip extends Ship{
     }
     @Override
     public void shoot() {
-        laser = new Laser(this.posX,this.posY,batch,true,this.bulletSpeed);
+        laser = new Laser(this.posX,this.posY,batch,true,this.bulletSpeed,270);
         laser.create();
     }
 

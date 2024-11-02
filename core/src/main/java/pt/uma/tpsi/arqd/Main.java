@@ -17,7 +17,6 @@ public class Main extends ApplicationAdapter {
     private BackgroundManagement backgroundManagement;
     private com.badlogic.gdx.graphics.g2d.BitmapFont font;
     private Player player ;
-    private SmallShip enemy;
     private Fleet fleet;
     private boolean  gameOver = false;
 
@@ -67,7 +66,7 @@ public class Main extends ApplicationAdapter {
         fleet.handlePlayerLaser(player);
         fleet.isOutOfBounds();
         fleet.setGameOver(gameOver);
-        player.handleExplosion();
+
 
 
     }

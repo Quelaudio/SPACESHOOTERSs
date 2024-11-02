@@ -2,7 +2,6 @@ package pt.uma.tpsi.arqd.entitys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -10,17 +9,15 @@ import java.util.Random;
 public class Fleet {
 
     private ArrayList<Ship> fleet;
-    private ArrayList<Explosion> explosions; // List to hold active explosions
+    private ArrayList<Explosion> explosions;
     private SpriteBatch batch;
     int screenHeight = Gdx.graphics.getHeight();
 
-    private Ship ship;
-    private Laser laser;
     private boolean gameOver;
 
     public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows, int width, int height) {
         this.fleet = new ArrayList<Ship>();
-        this.explosions = new ArrayList<>(); // Initialize explosion list
+        this.explosions = new ArrayList<>();
         this.batch = batch;
 
         for (int i = 0; i < 8; i++) {
@@ -30,8 +27,8 @@ public class Fleet {
             l.create();
             s.create();
             m.create();
-//            fleet.add(l);
-//            fleet.add(s);
+            fleet.add(l);
+            fleet.add(s);
             fleet.add(m);
         }
 
@@ -99,6 +96,8 @@ public class Fleet {
             fleet.get(randomIndex).shoot();
         }
     }
+
+
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
