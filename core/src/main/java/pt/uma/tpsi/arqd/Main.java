@@ -19,6 +19,7 @@ public class Main extends ApplicationAdapter {
     private Player player ;
     private SmallShip enemy;
     private Fleet fleet;
+    private boolean  gameOver = false;
 
 
 
@@ -30,7 +31,7 @@ public class Main extends ApplicationAdapter {
         font = new com.badlogic.gdx.graphics.g2d.BitmapFont(Gdx.files.internal("gamefont.fnt"), Gdx.files.internal("gamefont.png"), false);
         backgroundManagement = new BackgroundManagement(batch);
         player=new Player(100, 100, batch,"ship.png","laser-bolts",5,2,64,64);
-        fleet = new Fleet(100 , 450, batch, "laser-bolts",2, 1,30, 30);
+        fleet = new Fleet(100 , 450, batch, "laser-bolts",2, 1,64, 64);
 
 
 
@@ -50,6 +51,13 @@ public class Main extends ApplicationAdapter {
         backgroundManagement.render();
         BitmapFont.drawText(10,680,player.StringHealth(),batch);
         BitmapFont.drawText(1000,680,player.scoreString(),batch);
+        if (player.HP <= 0) {
+            gameOver = true;
+            BitmapFont.drawText(500, 360, "Game Over", batch);
+        } else if (fleet.isAllShipsDestroyed()) {
+            BitmapFont.drawText(500, 360, "You Win!", batch);
+            System.out.println(fleet.isAllShipsDestroyed());
+        }
         player.render();
         fleet.render();
 
@@ -58,6 +66,8 @@ public class Main extends ApplicationAdapter {
         fleet.handleCollision(player);
         fleet.handlePlayerLaser(player);
         fleet.isOutOfBounds();
+        fleet.setGameOver(gameOver);
+        player.handleExplosion();
 
 
     }

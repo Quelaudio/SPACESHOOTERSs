@@ -14,20 +14,24 @@ public class Fleet {
     private SpriteBatch batch;
     int screenHeight = Gdx.graphics.getHeight();
 
+    private Ship ship;
+    private Laser laser;
+    private boolean gameOver;
+
     public Fleet(int posX, int posY, SpriteBatch batch, String bulletString, int colum, int rows, int width, int height) {
         this.fleet = new ArrayList<Ship>();
         this.explosions = new ArrayList<>(); // Initialize explosion list
         this.batch = batch;
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             Ship s = new SmallShip(posX + i * 158, posY + 50, batch, "enemy-small.png", bulletString, colum, rows, width, height);
             Ship m = new MediumShip(posX + i * 150, posY + 100, batch, "enemy-medium.png", bulletString, colum, rows, width, height);
             Ship l = new LargeShip(posX + i * 150, posY + 150, batch, "enemy-big.png", bulletString, colum, rows, width, height);
             l.create();
             s.create();
             m.create();
-            fleet.add(l);
-            fleet.add(s);
+//            fleet.add(l);
+//            fleet.add(s);
             fleet.add(m);
         }
 
@@ -47,13 +51,7 @@ public class Fleet {
                 if (ship.boundingBox.overlaps(laser.boundingBox)) {
                     ship.explode();
                     player.Score += 5;
-
-                    Explosion explosion = new Explosion(ship.posX, ship.posY, batch, "explosion.png", 5, 1);
-                    explosions.add(explosion);
-
-
-
-
+                    explosions.add(new Explosion(ship.posX, ship.posY, batch, "explosion.png", 4, 1));
                     return true;
                 }
             }
@@ -70,6 +68,7 @@ public class Fleet {
                 ship.laser = null;
             }
         }
+        player.verifyDeath();
     }
 
     public boolean isOutOfBounds() {
@@ -78,7 +77,6 @@ public class Fleet {
         for (Ship ship : fleet) {
             if (ship.laser != null) {
                 if (ship.laser.posY > screenHeight || ship.laser.posY < 0) {
-                    System.out.println("The laser is out of bounds.");
                     ship.laser = null;
                     outOfBounds = true;
                 }
@@ -88,13 +86,21 @@ public class Fleet {
         return outOfBounds;
     }
 
+    public boolean isAllShipsDestroyed() {
+        System.out.println("Fleet size: " + fleet.size());
+        return fleet.isEmpty();
+    }
+
+
     public void randomShoot() {
-        if (!fleet.isEmpty()) {
+        if (!fleet.isEmpty() && !gameOver) {
             Random r = new Random();
             int randomIndex = r.nextInt(fleet.size());
-            System.out.println("Shoot");
             fleet.get(randomIndex).shoot();
         }
+    }
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 
     public void create() {
@@ -108,9 +114,20 @@ public class Fleet {
             s.render();
         }
 
-        // Render active explosions
-        for (Explosion explosion : explosions) {
-            explosion.animator.render(explosion.posX, explosion.posY);
+
+        Iterator<Explosion> iterator = explosions.iterator();
+        //cria um Iterator para a lista explosions que vai modificar enquanto corre
+        //o while apenas ira percorrer se existir uma "explosao" aseguir
+        while (iterator.hasNext()) {
+            //apanha a proxima explosao
+            Explosion explosion = iterator.next();
+            explosion.render();
+
+            if (explosion.isFinished()) {
+                iterator.remove();
+            }
         }
+
+
     }
 }

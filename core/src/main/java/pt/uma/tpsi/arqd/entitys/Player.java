@@ -15,6 +15,9 @@ public class Player extends Ship {
     public int bulletSpeed = 5;
     public int HP = 100;
     public int Score;
+    private boolean isDead = false;
+    private Explosion explosion;
+
 
 
 
@@ -43,6 +46,8 @@ public class Player extends Ship {
             l.render();
         }
     }
+
+
 
     // este metodo vai lidar com os inputs do user
     private void handleInput() {
@@ -89,12 +94,34 @@ public class Player extends Ship {
         return this.laserArrayList;
     }
 
+
+
+    public void handleExplosion() {
+        if ((explosion == null && isDead) == true) {
+            // Inicializa a explosão na posição do jogador
+            explosion = new Explosion(posX, posY, batch, "explosion.png", 4, 1);
+            explosion.create(); // Cria a animação da explosão
+        }
+
+
+    }
+
+    public void verifyDeath() {
+        if (HP <= 0) {
+            isDead = true; // Marca o jogador como morto
+
+
+        }
+    }
+
     //  shooting logic
     @Override
     public void shoot() {
-        Laser l = new Laser(this.posX,this.posY, batch,false,this.bulletSpeed);
-        l.create();
-        laserArrayList.add(l);
+        if (!isDead) {
+            Laser l = new Laser(this.posX, this.posY, batch, false, this.bulletSpeed);
+            l.create();
+            laserArrayList.add(l);
+        }
     }
 
 

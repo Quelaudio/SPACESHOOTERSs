@@ -17,7 +17,7 @@ public class Animator {
     private String path;
     private int width, height;
     private boolean flip;
-    // A variable for tracking elapsed time for the animation
+
     float stateTime;
 
     public Animator(SpriteBatch batch, String path, int columns, int rows) {
@@ -26,10 +26,8 @@ public class Animator {
         this.FRAME_ROWS = rows;
         this.path = path;
         this.flip = false;
-    }
 
-    public Animator() {
-
+        create();
     }
 
     public void setFlip(boolean flip) {
@@ -48,8 +46,8 @@ public class Animator {
         this.height = walkSheet.getHeight() / FRAME_ROWS;
 
         TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-                walkSheet.getWidth() / FRAME_COLS,
-                walkSheet.getHeight() / FRAME_ROWS);
+            walkSheet.getWidth() / FRAME_COLS,
+            walkSheet.getHeight() / FRAME_ROWS);
 
         // Place the regions into a 1D array in the correct order, starting from the top
         // left, going across first. The Animation constructor requires a 1D array.
@@ -91,6 +89,8 @@ public class Animator {
         return width;
     }
 
-
+//    public boolean isAnimationFinished() {
+//        return animationFinished;
+//    }
 
 }

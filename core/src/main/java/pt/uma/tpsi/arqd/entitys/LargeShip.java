@@ -8,7 +8,7 @@ public class LargeShip extends Ship{
     int bulletSpeed = 5;
     Rectangle boundingBox;
     private SpriteBatch batch;
-    private int bulletDamage = 15;
+    private int bulletDamage = 100;
 
 
     public LargeShip(int posX, int posY, SpriteBatch batch, String pathString, String bulletString,int colum, int rows,int width, int height) {
