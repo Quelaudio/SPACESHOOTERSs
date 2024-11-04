@@ -23,7 +23,7 @@ public class Fleet {
 
         for (int i = 0; i < 8; i++) {
             Ship s = new SmallShip(360 + i * ( 68), posY + 50, batch, "enemy-small.png", bulletString, colum, rows, width, height);
-            Ship m = new MediumShip(posX + i * 150, posY + 100, batch, "enemy-medium.png", bulletString, colum, rows, width, height);
+            Ship m = new MediumShip(300 + i * 90, posY + 100, batch, "enemy-medium.png", bulletString, colum, rows, width, height);
             Ship l = new LargeShip(320 + i * 80, posY + 150, batch, "enemy-big.png", bulletString, colum, rows, width, height);
             l.create();
             s.create();
