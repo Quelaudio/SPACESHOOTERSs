@@ -40,8 +40,8 @@ public class Player extends Ship {
 
 
     public void render() {
-        verifyDeath(); // Verifica se o jogador morreu
-        handleExplosion();
+        verifyDeath();
+        handlePlayerExplosion();
         if (!isDead ) {
             handleInput();
             keepWithinBounds();
@@ -81,7 +81,13 @@ public class Player extends Ship {
 
 
     public String StringHealth(){
-        return "Player Health:" + HP;
+
+        if(HP < 0) {
+            return "Player Health:" + 0;
+        }
+        else {
+        return  "Player Health:" + HP;
+        }
     }
 
     public String scoreString(){
@@ -106,11 +112,11 @@ public class Player extends Ship {
 
 
 
-    public void handleExplosion() {
+    public void handlePlayerExplosion() {
         //caso o palyer esta marcado
         if (isDead) {
             if (explosion == null) {
-                explosion = new Explosion(posX, posY, batch, "explosion.png", 4, 1);
+                explosion = new Explosion(posX, posY, batch, "explosion.png", 5, 1);
                 explosion.create();
             }
             // Renderiza a explosão enquanto nao esta "Finished"

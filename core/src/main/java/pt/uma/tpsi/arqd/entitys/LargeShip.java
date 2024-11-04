@@ -23,7 +23,7 @@ public class LargeShip extends Ship{
 
     @Override
     public void shoot() {
-        // isto Sir Hugo ira calcular o centro basicamente pegas na altura e with e divides por 2
+        // isto ira calcular o centro basicamente pegas na altura e with e divides por 2
         float centerX = Gdx.graphics.getWidth() / 2f;
         float centerY = Gdx.graphics.getHeight() / 2f;
 

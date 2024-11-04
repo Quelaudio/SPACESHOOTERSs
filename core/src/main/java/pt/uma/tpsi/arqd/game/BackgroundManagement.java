@@ -12,7 +12,7 @@ public class BackgroundManagement {
 
     public BackgroundManagement(SpriteBatch batch) {
         this.spriteBatch = batch;
-        background = new Texture("space.png");
+        background = new Texture("space2.png");
         sprite = new Sprite(background);
         sprite.setPosition(0, 0);
     }

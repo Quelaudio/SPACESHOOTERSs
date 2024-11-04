@@ -28,10 +28,10 @@ public class Explosion {
     }
 
     public void render() {
-        elapsedTime += Gdx.graphics.getDeltaTime(); // Incrementa o tempo com o deltaTime
-        animator.render(posX, posY);  // Renderiza a animação
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        animator.render(posX, posY);
 
-        // Verifica se a animação terminou após a duração extra
+        // Verifica se a animação terminou apos a duraçao extra
         if (elapsedTime >= extra_Duration) {
             animationFinished = true;
         }

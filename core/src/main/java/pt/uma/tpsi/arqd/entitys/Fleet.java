@@ -11,6 +11,7 @@ public class Fleet {
     private ArrayList<Ship> fleet;
     private ArrayList<Explosion> explosions;
     private SpriteBatch batch;
+    boolean outOfBounds = false;
     int screenHeight = Gdx.graphics.getHeight();
 
     private boolean gameOver;
@@ -21,9 +22,9 @@ public class Fleet {
         this.batch = batch;
 
         for (int i = 0; i < 8; i++) {
-            Ship s = new SmallShip(posX + i * 158, posY + 50, batch, "enemy-small.png", bulletString, colum, rows, width, height);
+            Ship s = new SmallShip(360 + i * ( 68), posY + 50, batch, "enemy-small.png", bulletString, colum, rows, width, height);
             Ship m = new MediumShip(posX + i * 150, posY + 100, batch, "enemy-medium.png", bulletString, colum, rows, width, height);
-            Ship l = new LargeShip(posX + i * 150, posY + 150, batch, "enemy-big.png", bulletString, colum, rows, width, height);
+            Ship l = new LargeShip(320 + i * 80, posY + 150, batch, "enemy-big.png", bulletString, colum, rows, width, height);
             l.create();
             s.create();
             m.create();
@@ -48,7 +49,7 @@ public class Fleet {
                 if (ship.boundingBox.overlaps(laser.boundingBox)) {
                     ship.explode();
                     player.Score += 5;
-                    explosions.add(new Explosion(ship.posX, ship.posY, batch, "explosion.png", 4, 1));
+                    explosions.add(new Explosion(ship.posX, ship.posY, batch, "explosion.png", 5, 1));
                     return true;
                 }
             }
@@ -57,7 +58,7 @@ public class Fleet {
         fleet.removeIf(Ship::isDestroyed);
     }
 
-    public void handlePlayerLaser(Player player) {
+    public void handlePlayerLife(Player player) {
         for (Ship ship : fleet) {
             if (ship.laser != null && player.boundingBox.overlaps(ship.laser.boundingBox)) {
                 player.HP -= ship.getDamage();
@@ -68,8 +69,8 @@ public class Fleet {
         player.verifyDeath();
     }
 
-    public boolean isOutOfBounds() {
-        boolean outOfBounds = false;
+    public void isOutOfBounds() {
+
 
         for (Ship ship : fleet) {
             if (ship.laser != null) {
@@ -80,7 +81,7 @@ public class Fleet {
             }
         }
 
-        return outOfBounds;
+
     }
 
     public boolean isAllShipsDestroyed() {
